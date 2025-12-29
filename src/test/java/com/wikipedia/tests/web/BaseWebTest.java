@@ -1,7 +1,7 @@
-package com.uitesting.tests.web;
+package com.wikipedia.tests.web;
 
-import com.uitesting.config.TestConfig;
-import com.uitesting.driver.WebDriverFactory;
+import com.wikipedia.config.TestConfig;
+import com.wikipedia.driver.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;

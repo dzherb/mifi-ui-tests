@@ -1,6 +1,6 @@
-package com.uitesting.driver;
+package com.wikipedia.driver;
 
-import com.uitesting.config.TestConfig;
+import com.wikipedia.config.TestConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

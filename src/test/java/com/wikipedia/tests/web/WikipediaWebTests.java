@@ -1,7 +1,7 @@
-package com.uitesting.tests.web;
+package com.wikipedia.tests.web;
 
-import com.uitesting.pages.web.WikipediaArticlePage;
-import com.uitesting.pages.web.WikipediaMainPage;
+import com.wikipedia.pages.web.WikipediaArticlePage;
+import com.wikipedia.pages.web.WikipediaMainPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

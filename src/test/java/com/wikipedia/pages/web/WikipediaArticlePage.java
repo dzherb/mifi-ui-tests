@@ -1,4 +1,4 @@
-package com.uitesting.pages.web;
+package com.wikipedia.pages.web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

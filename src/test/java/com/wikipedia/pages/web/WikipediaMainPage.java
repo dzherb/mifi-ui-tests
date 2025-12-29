@@ -1,4 +1,4 @@
-package com.uitesting.pages.web;
+package com.wikipedia.pages.web;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

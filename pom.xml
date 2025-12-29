@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>4.23.0</selenium.version>
         <testng.version>7.10.2</testng.version>
+        <appium.version>9.2.3</appium.version>
         <webdrivermanager.version>6.1.0</webdrivermanager.version>
     </properties>
 
@@ -33,6 +34,11 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>${webdrivermanager.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium.version}</version>
         </dependency>
     </dependencies>
 
