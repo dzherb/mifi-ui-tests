@@ -16,8 +16,8 @@ public class WikipediaWebTests extends BaseWebTest {
     @Test(groups = "web")
     public void searchOpensExactArticle() {
         WikipediaMainPage mainPage = new WikipediaMainPage(driver, wait);
-        WikipediaArticlePage articlePage = mainPage.searchFor("Selenium (software)");
-        Assert.assertEquals(articlePage.title(), "Selenium (software)", "Article title should match query");
+        WikipediaArticlePage articlePage = mainPage.searchFor("Java (programming language)");
+        Assert.assertEquals(articlePage.title(), "Java (programming language)", "Article title should match query");
     }
 
     @Test(groups = "web")
