@@ -8,24 +8,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SearchPage {
 
-    private static final By SEARCH_CONTAINER = AppiumBy.id("org.wikipedia:id/search_container");
-    private static final By SEARCH_INPUT = AppiumBy.id("org.wikipedia:id/search_src_text");
-    private static final By SEARCH_TAB = AppiumBy.id("org.wikipedia:id/nav_tab_search");
-    private static final By SEARCH_CARD = AppiumBy.id("org.wikipedia:id/search_card");
-    private static final By SEARCH_ACTION = AppiumBy.id("org.wikipedia:id/search_action");
-    private static final By SEARCH_MENU = AppiumBy.id("org.wikipedia:id/menu_search");
-    private static final By SEARCH_BAR = AppiumBy.id("org.wikipedia:id/search_bar");
-    private static final By SEARCH_BAR_TEXT = AppiumBy.id("org.wikipedia:id/search_bar_text");
-    private static final By SEARCH_ACCESSIBILITY = AppiumBy.accessibilityId("Search Wikipedia");
-    private static final By RESULT_TITLE = AppiumBy.id("org.wikipedia:id/page_list_item_title");
-    private static final By RESULT_DESCRIPTION = AppiumBy.id("org.wikipedia:id/page_list_item_description");
-    private static final By CLEAR_SEARCH = AppiumBy.id("org.wikipedia:id/search_close_btn");
+    private static final By RESULT_TITLE = AppiumBy.id(
+            "org.wikipedia:id/page_list_item_title"
+    );
+    private static final By RESULT_DESCRIPTION = AppiumBy.id(
+            "org.wikipedia:id/page_list_item_description"
+    );
+    private static final By CLEAR_SEARCH = AppiumBy.id(
+            "org.wikipedia:id/search_close_btn"
+    );
 
     private final AndroidDriver driver;
     private final WebDriverWait wait;
@@ -33,36 +29,6 @@ public class SearchPage {
     public SearchPage(AndroidDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
-    }
-
-    public void openSearch() {
-        By toClick = wait.until(_ ->
-                findFirstVisible(
-                        SEARCH_CONTAINER,
-                        SEARCH_TAB,
-                        SEARCH_CARD,
-                        SEARCH_ACTION,
-                        SEARCH_MENU,
-                        SEARCH_BAR,
-                        SEARCH_BAR_TEXT,
-                        SEARCH_ACCESSIBILITY,
-                        AppiumBy.androidUIAutomator("new UiSelector().descriptionContains(\"Search\")"),
-                        AppiumBy.androidUIAutomator("new UiSelector().textContains(\"Search\")")
-                ).orElse(null)
-        );
-
-        if (toClick == null) {
-            throw new NoSuchElementException("Wikipedia's search element");
-        }
-
-        wait.until(ExpectedConditions.elementToBeClickable(toClick)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(SEARCH_INPUT));
-    }
-
-    public void typeQuery(String query) {
-        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(SEARCH_INPUT));
-        input.clear();
-        input.sendKeys(query);
     }
 
     public List<WebElement> resultTitles() {
@@ -81,13 +47,16 @@ public class SearchPage {
         return driver.findElements(RESULT_DESCRIPTION);
     }
 
-    public List<String> resultTitleTexts() {
+    public List<String> results() {
         return resultTitles().stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
-    public String openResultWithText(String text) {
+    public String openArticle(String text) {
         String lower = text.toLowerCase();
-        for (int attempt = 0; attempt < 6; attempt++) {
+
+        final int attempts = 5;
+
+        for (int a = 0; a < attempts; a++) {
             List<WebElement> titles = resultTitles();
             Optional<WebElement> match = titles.stream()
                     .filter(e -> {
@@ -99,11 +68,12 @@ public class SearchPage {
             if (match.isPresent()) {
                 String titleText = match.get().getText();
                 match.get().click();
+
                 return titleText;
             }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException ignored) {
                 Thread.currentThread().interrupt();
                 break;
@@ -113,7 +83,9 @@ public class SearchPage {
         List<WebElement> titles = resultTitles();
         WebElement first = titles.getFirst();
         String titleText = first.getText();
+
         first.click();
+
         return titleText;
     }
 
@@ -122,16 +94,8 @@ public class SearchPage {
     }
 
     public void clearSearch() {
-        wait.until(ExpectedConditions.elementToBeClickable(CLEAR_SEARCH)).click();
-    }
-
-    private Optional<By> findFirstVisible(By... locators) {
-        for (By locator : locators) {
-            List<WebElement> elements = driver.findElements(locator);
-            if (!elements.isEmpty() && elements.getFirst().isDisplayed()) {
-                return Optional.of(locator);
-            }
-        }
-        return Optional.empty();
+        wait.until(
+                ExpectedConditions.elementToBeClickable(CLEAR_SEARCH)
+        ).click();
     }
 }

@@ -6,15 +6,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class IMDbSearchResultsPage extends BaseWebPage {
 
-    private static final By RESULTS_LIST =
-            By.cssSelector("ul.ipc-metadata-list");
-
-    private static final By FIRST_RESULT_LINK =
-            By.cssSelector(
-                    "ul.ipc-metadata-list " +
-                            "li.ipc-metadata-list-summary-item " +
-                            "a.ipc-title-link-wrapper"
-            );
+    private static final By RESULTS_LIST = By.cssSelector(
+            "ul.ipc-metadata-list"
+    );
+    private static final By FIRST_RESULT_LINK = By.cssSelector(
+            "ul.ipc-metadata-list " +
+                    "li.ipc-metadata-list-summary-item " +
+                    "a.ipc-title-link-wrapper"
+    );
 
     public IMDbSearchResultsPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);

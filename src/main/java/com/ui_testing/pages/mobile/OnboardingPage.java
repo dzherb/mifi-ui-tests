@@ -9,7 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OnboardingPage {
 
-    private static final By SKIP_BUTTON = AppiumBy.id("org.wikipedia:id/fragment_onboarding_skip_button");
+    private static final By SKIP_BUTTON = AppiumBy.id(
+            "org.wikipedia:id/fragment_onboarding_skip_button"
+    );
 
     private final AndroidDriver driver;
     private final WebDriverWait wait;

@@ -9,15 +9,12 @@ public class IMDbMainPage extends BaseWebPage {
     private static final By IMDB_LOGO = By.id(
             "home_img_holder"
     );
-
     private static final By SEARCH_INPUT = By.id(
             "suggestion-search"
     );
-
     private static final By MENU_BUTTON = By.id(
             "imdbHeader-navDrawerOpen"
     );
-
     private static final By TOP_250_LINK = By.cssSelector(
             "a[aria-label='Go to Top 250 movies']"
     );

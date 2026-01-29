@@ -9,7 +9,6 @@ public class IMDbTop250Page extends BaseWebPage {
     private static final By CHART = By.cssSelector(
             "div[data-testid='chart-layout-main-column']"
     );
-
     private static final By FIRST_MOVIE_TITLE = By.cssSelector(
             "div[data-testid='chart-layout-main-column'] " +
                     "li h3"

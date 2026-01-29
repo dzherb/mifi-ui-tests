@@ -1,10 +1,10 @@
 package com.ui_testing.tests.mobile;
 
 import com.ui_testing.pages.mobile.ArticlePage;
+import com.ui_testing.pages.mobile.HomePage;
 import com.ui_testing.pages.mobile.OnboardingPage;
 import com.ui_testing.pages.mobile.SearchPage;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -12,40 +12,57 @@ import java.util.List;
 
 public class WikipediaMobileTests extends BaseMobileTest {
 
-    private SearchPage searchPage;
-
     @BeforeMethod(alwaysRun = true)
-    public void initPages() {
-        if (driver == null || wait == null) {
-            throw new SkipException("Skipping mobile tests because Appium driver is not initialized");
-        }
-
+    public void skipOnboarding() {
         OnboardingPage onboardingPage = new OnboardingPage(driver, wait);
-        searchPage = new SearchPage(driver, wait);
         onboardingPage.skipIfPresent();
     }
 
     @Test(groups = "mobile")
-    public void searchShowsTitlesAndDescriptions() {
-        searchPage.openSearch();
-        searchPage.typeQuery("Selenium");
+    public void testLanguageSwitchToRussian() {
+        HomePage homePage = new HomePage(driver, wait);
 
-        List<String> titles = searchPage.resultTitleTexts();
-        Assert.assertFalse(titles.isEmpty(), "Search results should not be empty");
+        homePage.openLanguageSetting()
+                .selectRussianLanguage()
+                .returnToHome();
+
+        String expectedTitle = "Wikipedia";
+
+        String actualTitle = homePage.searchFor(expectedTitle)
+                .openArticle("Wikipedia");
+
+        Assert.assertEquals(expectedTitle, actualTitle);
+    }
+
+    @Test(groups = "mobile")
+    public void searchShowsTitlesAndDescriptions() {
+        HomePage homePage = new HomePage(driver, wait);
+        SearchPage searchPage = homePage.searchFor("Selenium");
+        List<String> searchResults = searchPage.results();
+
+        Assert.assertFalse(
+                searchResults.isEmpty(),
+                "Search results should not be empty"
+        );
         Assert.assertTrue(
-                titles.stream().anyMatch(t -> t.toLowerCase().contains("selenium")),
+                searchResults.stream().anyMatch(t -> t.toLowerCase().contains("selenium")),
                 "At least one title should contain the query");
-        Assert.assertFalse(searchPage.resultDescriptions().isEmpty(), "Descriptions should be present for results");
+        Assert.assertFalse(
+                searchPage.resultDescriptions().isEmpty(),
+                "Descriptions should be present for results"
+        );
     }
 
     @Test(groups = "mobile")
     public void openArticleFromSearch() {
-        searchPage.openSearch();
-        searchPage.typeQuery("Software testing");
+        HomePage homePage = new HomePage(driver, wait);
+        SearchPage searchPage = homePage.searchFor("Software testing");
+        String selectedTitle = searchPage.openArticle("Software testing");
 
-        String selectedTitle = searchPage.openResultWithText("Software testing");
         ArticlePage articlePage = new ArticlePage(wait);
+
         String openedTitle = articlePage.waitForTitleContaining(selectedTitle);
+
         Assert.assertTrue(
                 openedTitle.toLowerCase().contains(selectedTitle.toLowerCase())
                         || selectedTitle.toLowerCase().contains(openedTitle.toLowerCase()),
@@ -54,12 +71,20 @@ public class WikipediaMobileTests extends BaseMobileTest {
 
     @Test(groups = "mobile")
     public void clearSearchResetsResults() {
-        searchPage.openSearch();
-        searchPage.typeQuery("Selenium");
-        Assert.assertFalse(searchPage.resultTitles().isEmpty(), "Results should appear after typing query");
+        HomePage homePage = new HomePage(driver, wait);
+        SearchPage searchPage = homePage.searchFor("Selenium");
+
+        Assert.assertFalse(
+                searchPage.resultTitles().isEmpty(),
+                "Results should appear after typing query"
+        );
 
         searchPage.clearSearch();
         searchPage.waitResultsDisappear();
-        Assert.assertEquals(searchPage.resultTitlesCount(), 0, "Results should disappear after clearing search");
+
+        Assert.assertEquals(
+                searchPage.resultTitlesCount(), 0,
+                "Results should disappear after clearing search"
+        );
     }
 }
