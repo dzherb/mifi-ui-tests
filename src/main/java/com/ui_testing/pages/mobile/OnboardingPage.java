@@ -1,4 +1,4 @@
-package com.wikipedia.pages.mobile;
+package com.ui_testing.pages.mobile;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
@@ -21,6 +21,7 @@ public class OnboardingPage {
 
     public void skipIfPresent() {
         if (driver == null || wait == null) return;
+
         try {
             if (!driver.findElements(SKIP_BUTTON).isEmpty()) {
                 wait.until(ExpectedConditions.elementToBeClickable(SKIP_BUTTON)).click();

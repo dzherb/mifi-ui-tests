@@ -1,4 +1,4 @@
-package com.wikipedia.pages.web;
+package com.ui_testing.pages.web;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;

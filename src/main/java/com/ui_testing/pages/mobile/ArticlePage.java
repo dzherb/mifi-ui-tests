@@ -1,4 +1,4 @@
-package com.wikipedia.pages.mobile;
+package com.ui_testing.pages.mobile;
 
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
@@ -26,14 +26,16 @@ public class ArticlePage {
 
     public String waitForTitleContaining(String expectedText) {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(ARTICLE_PROGRESS));
-        List<By> candidates = new ArrayList<>(List.of(
-                ARTICLE_TITLE,
-                ARTICLE_TITLE_ALT,
-                ARTICLE_TOOLBAR_TITLE,
-                ARTICLE_TITLE_HEADER,
-                ARTICLE_TITLE_HEADER_ALT,
-                AppiumBy.androidUIAutomator("new UiSelector().resourceIdMatches(\".*title\")")
-        ));
+        List<By> candidates = new ArrayList<>(
+                List.of(
+                        ARTICLE_TITLE,
+                        ARTICLE_TITLE_ALT,
+                        ARTICLE_TOOLBAR_TITLE,
+                        ARTICLE_TITLE_HEADER,
+                        ARTICLE_TITLE_HEADER_ALT,
+                        AppiumBy.androidUIAutomator("new UiSelector().resourceIdMatches(\".*title\")")
+                )
+        );
 
         if (expectedText != null && !expectedText.isBlank()) {
             candidates.add(AppiumBy.androidUIAutomator("new UiSelector().textContains(\"" + expectedText + "\")"));

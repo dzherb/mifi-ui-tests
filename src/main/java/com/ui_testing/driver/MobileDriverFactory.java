@@ -1,6 +1,6 @@
-package com.wikipedia.driver;
+package com.ui_testing.driver;
 
-import com.wikipedia.config.TestConfig;
+import com.ui_testing.config.Config;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.WebDriverException;
@@ -16,27 +16,32 @@ public final class MobileDriverFactory {
 
     public static AndroidDriver createAndroidDriver() {
         UiAutomator2Options options = new UiAutomator2Options();
-        options.setDeviceName(TestConfig.deviceName());
-        options.setUdid(TestConfig.deviceName());
-        if (!TestConfig.platformVersion().isEmpty()) {
-            options.setPlatformVersion(TestConfig.platformVersion());
+
+        options.setDeviceName(Config.deviceName());
+        options.setUdid(Config.deviceName());
+
+        if (!Config.platformVersion().isEmpty()) {
+            options.setPlatformVersion(Config.platformVersion());
         }
+
         options.setAppPackage("org.wikipedia");
         options.setAppActivity("org.wikipedia.main.MainActivity");
         options.setNoReset(true);
-        options.setNewCommandTimeout(Duration.ofSeconds(120));
+        options.setNewCommandTimeout(Duration.ofSeconds(60));
         options.setAutoGrantPermissions(true);
         options.setCapability("forceAppLaunch", true);
 
-        String baseUrl = TestConfig.appiumServerUrl();
+        String baseUrl = Config.appiumServerUrl();
+
         try {
             return new AndroidDriver(new URL(baseUrl), options);
         } catch (WebDriverException first) {
-            // Appium 2/3 по умолчанию слушает без /wd/hub; пробуем альтернативный путь.
             String fallbackUrl = toggleHubPath(baseUrl);
+
             if (fallbackUrl.equals(baseUrl)) {
                 throw first;
             }
+
             try {
                 return new AndroidDriver(new URL(fallbackUrl), options);
             } catch (MalformedURLException ignored) {
@@ -54,6 +59,7 @@ public final class MobileDriverFactory {
         if (url.endsWith("/")) {
             return url + "wd/hub";
         }
+
         return url + "/wd/hub";
     }
 }

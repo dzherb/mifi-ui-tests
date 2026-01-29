@@ -1,15 +1,13 @@
-package com.wikipedia.tests.mobile;
+package com.ui_testing.tests.mobile;
 
-import com.wikipedia.driver.MobileDriverFactory;
+import com.ui_testing.driver.MobileDriverFactory;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
-import java.util.List;
 
 public abstract class BaseMobileTest {
 
@@ -34,9 +32,5 @@ public abstract class BaseMobileTest {
         if (driver != null) {
             driver.quit();
         }
-    }
-
-    protected boolean isElementPresent(List<WebElement> elements) {
-        return elements != null && !elements.isEmpty();
     }
 }

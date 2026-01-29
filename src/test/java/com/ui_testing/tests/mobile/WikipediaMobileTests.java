@@ -1,8 +1,8 @@
-package com.wikipedia.tests.mobile;
+package com.ui_testing.tests.mobile;
 
-import com.wikipedia.pages.mobile.ArticlePage;
-import com.wikipedia.pages.mobile.OnboardingPage;
-import com.wikipedia.pages.mobile.SearchPage;
+import com.ui_testing.pages.mobile.ArticlePage;
+import com.ui_testing.pages.mobile.OnboardingPage;
+import com.ui_testing.pages.mobile.SearchPage;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
@@ -13,14 +13,14 @@ import java.util.List;
 public class WikipediaMobileTests extends BaseMobileTest {
 
     private SearchPage searchPage;
-    private OnboardingPage onboardingPage;
 
     @BeforeMethod(alwaysRun = true)
     public void initPages() {
         if (driver == null || wait == null) {
             throw new SkipException("Skipping mobile tests because Appium driver is not initialized");
         }
-        onboardingPage = new OnboardingPage(driver, wait);
+
+        OnboardingPage onboardingPage = new OnboardingPage(driver, wait);
         searchPage = new SearchPage(driver, wait);
         onboardingPage.skipIfPresent();
     }

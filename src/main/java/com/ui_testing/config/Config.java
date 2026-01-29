@@ -1,12 +1,8 @@
-package com.wikipedia.config;
+package com.ui_testing.config;
 
-public final class TestConfig {
+public final class Config {
 
-    private TestConfig() {
-    }
-
-    public static String webBaseUrl() {
-        return System.getProperty("webBaseUrl", "https://en.wikipedia.org");
+    private Config() {
     }
 
     public static String browser() {

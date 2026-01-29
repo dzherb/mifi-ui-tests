@@ -1,4 +1,4 @@
-package com.wikipedia.pages.mobile;
+package com.ui_testing.pages.mobile;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
@@ -81,14 +81,6 @@ public class SearchPage {
         return driver.findElements(RESULT_DESCRIPTION);
     }
 
-    public String openFirstResult() {
-        List<WebElement> titles = resultTitles();
-        WebElement first = titles.get(0);
-        String titleText = first.getText();
-        first.click();
-        return titleText;
-    }
-
     public List<String> resultTitleTexts() {
         return resultTitles().stream().map(WebElement::getText).collect(Collectors.toList());
     }
@@ -119,7 +111,7 @@ public class SearchPage {
         }
 
         List<WebElement> titles = resultTitles();
-        WebElement first = titles.get(0);
+        WebElement first = titles.getFirst();
         String titleText = first.getText();
         first.click();
         return titleText;

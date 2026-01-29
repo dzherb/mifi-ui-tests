@@ -8,7 +8,7 @@
             </run>
         </groups>
         <packages>
-            <package name="com.wikipedia.tests.web"/>
+            <package name="com.ui_testing.tests.web"/>
         </packages>
     </test>
 </suite>
