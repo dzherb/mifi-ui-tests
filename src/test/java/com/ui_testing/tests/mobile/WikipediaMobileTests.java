@@ -26,10 +26,10 @@ public class WikipediaMobileTests extends BaseMobileTest {
                 .selectRussianLanguage()
                 .returnToHome();
 
-        String expectedTitle = "Wikipedia";
+        String expectedTitle = "Москва";
 
         String actualTitle = homePage.searchFor(expectedTitle)
-                .openArticle("Wikipedia");
+                .openArticle("Москва");
 
         Assert.assertEquals(expectedTitle, actualTitle);
     }

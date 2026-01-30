@@ -16,21 +16,14 @@ public abstract class BaseMobileTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUpDriver() {
-        try {
-            driver = MobileDriverFactory.createAndroidDriver();
-            wait = new WebDriverWait(driver, Duration.ofSeconds(25));
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        } catch (Exception e) {
-            driver = null;
-            wait = null;
-            throw new SkipException("Appium session not started: " + e.getMessage(), e);
-        }
+        driver = MobileDriverFactory.createAndroidDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDownDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.quit();
     }
 }
